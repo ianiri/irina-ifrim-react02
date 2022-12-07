@@ -14,7 +14,11 @@ searchForm.addEventListener('submit', (event) => {
   // am rulat addEventListener
   const form = event.currentTarget;
   const queryInput = form.q;
-  const queryString = queryInput.value;
+  const queryString = queryInput.value.trim();
+
+  if(queryString.length < 3) {
+    return;
+  }
 
   clearMessages();
   stage.innerHTML = '';
