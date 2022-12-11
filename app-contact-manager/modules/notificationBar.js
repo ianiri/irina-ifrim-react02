@@ -8,6 +8,11 @@ closingIcon.innerText = 'x';
 export const addMessage = (messageElement) => {
   notificationBar.append(messageElement);
   notificationBar.append(closingIcon);
+  setTimeout(() => {
+    if (messageElement !== undefined) {
+      clearMessages();
+    }
+  }, 2000);
 };
 
 export const clearMessages = () => {

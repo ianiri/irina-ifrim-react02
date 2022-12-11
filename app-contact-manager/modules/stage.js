@@ -38,13 +38,7 @@ stage.addEventListener('submit', (event) => {
   }
   
   createContact(contact);
-
   addMessage(createMessage(`Contact ${name.value} ${surname.value} created.`));
-
-  setTimeout(() => {
-    clearMessages();
-  }, 2000);
-
   clearContent(stage);
 });
 
@@ -65,10 +59,6 @@ stage.addEventListener('click', (event) => {
 
   clearMessages();
   addMessage(createMessage('Contact removed', 'danger'))
-
-  setTimeout(() => {
-    clearMessages();
-  }, 2000);
 });
 
   //edit contact button
@@ -116,10 +106,6 @@ stage.addEventListener('submit', (event) => {
   clearContent(stage);
   clearMessages();
   addMessage(createMessage(`Contact ${contact.name} ${contact.surname} updated.`));
-
-  setTimeout(() => {
-    clearMessages();
-  }, 2000);
 });
 
 export default stage;

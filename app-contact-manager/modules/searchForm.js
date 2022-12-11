@@ -50,10 +50,6 @@ searchForm.addEventListener('submit', (event) => {
       ),
     );
   }
-  
-  setTimeout(() => {
-    clearMessages();
-  }, 2000);
 
   queryInput.value = '';
   stage.append(fragment);
