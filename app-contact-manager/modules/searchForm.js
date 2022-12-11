@@ -1,7 +1,7 @@
 import { addMessage, clearMessages } from './notificationBar.js';
 import { findContacts } from './query.js';
 import createMessage from './message.js';
-import { pluralize } from './utils.js';
+import { pluralize, clearContent } from './utils.js';
 import { render } from './contact.js';
 import stage from './stage.js';
 
@@ -14,14 +14,15 @@ searchForm.addEventListener('submit', (event) => {
   // am rulat addEventListener
   const form = event.currentTarget;
   const queryInput = form.q;
-  const queryString = queryInput.value.trim();
+  const queryValue = queryInput.value.toLowerCase();
+  const queryString = queryValue.replace(/ /g,'');
 
   if(queryString.length < 3) {
     return;
   }
 
   clearMessages();
-  stage.innerHTML = '';
+  clearContent(stage);
 
   const contacts = findContacts(queryString);
   const contactsCount = contacts.length;
@@ -49,6 +50,10 @@ searchForm.addEventListener('submit', (event) => {
       ),
     );
   }
+  
+  setTimeout(() => {
+    clearMessages();
+  }, 2000);
 
   queryInput.value = '';
   stage.append(fragment);

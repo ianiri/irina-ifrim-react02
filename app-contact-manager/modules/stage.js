@@ -1,7 +1,8 @@
-import { addMessage, clearMessages } from "./notificationBar.js";
+import { addMessage, clearMessages } from './notificationBar.js';
 import { createContact, deleteContact, getContact } from "./query.js";
 import createMessage from './message.js';
 import { render as renderEditContact} from "./editContact.js";
+import { clearContent } from './utils.js';
 
 const stage = document.querySelector('.stage');
 
@@ -13,7 +14,7 @@ stage.addEventListener('click', (event) => {
     return;
   }
 
-  stage.innerHTML = ''
+  clearContent(stage);
 });
 
 //create contact
@@ -40,7 +41,11 @@ stage.addEventListener('submit', (event) => {
 
   addMessage(createMessage(`Contact ${name.value} ${surname.value} created.`));
 
-  stage.innerHTML = '';
+  setTimeout(() => {
+    clearMessages();
+  }, 2000);
+
+  clearContent(stage);
 });
 
 //delete contact
@@ -59,9 +64,11 @@ stage.addEventListener('click', (event) => {
   parent.remove();
 
   clearMessages();
-
   addMessage(createMessage('Contact removed', 'danger'))
-  // alert(`Delete friend ${contactId}`);
+
+  setTimeout(() => {
+    clearMessages();
+  }, 2000);
 });
 
   //edit contact button
@@ -77,7 +84,7 @@ stage.addEventListener('click', (event) => {
     const contactId = Number(parentElement.dataset.contactId);
     const contact = getContact(contactId);
 
-    stage.innerHTML = '';
+    clearContent(stage);
 
     stage.append(renderEditContact(contact));
   });
@@ -106,9 +113,13 @@ stage.addEventListener('submit', (event) => {
   contact.phone = phone.value;
   contact.email = email.value;
 
-  stage.innerHTML = '';
+  clearContent(stage);
   clearMessages();
-  addMessage(createMessage(`Contact ${contact.name} ${contact.surname} updated.`))
+  addMessage(createMessage(`Contact ${contact.name} ${contact.surname} updated.`));
+
+  setTimeout(() => {
+    clearMessages();
+  }, 2000);
 });
 
 export default stage;
