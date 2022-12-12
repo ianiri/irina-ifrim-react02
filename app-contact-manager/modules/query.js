@@ -54,3 +54,33 @@ export const getContact = (contactId) => {
 
   return contact;
 };
+
+//edit contact submit
+export const updateContact = (contactId, {name, surname, phone, email}) => {
+  //asta face destructurarea:
+  // const name = contact.name;
+
+  const contact = getContact(contactId);
+
+  if (!contact) {
+    return;
+  }
+
+  contact.name = name;
+  contact.surname = surname;
+  contact.phone = phone;
+  contact.email = email;
+};
+
+export const createPet = (contactId, pet) => {
+  const contact = getContact(contactId);
+
+  if (contact === undefined) {
+    return;
+  }
+
+  contact.pets = contact.pets || [];
+
+  //push mutates
+  contact.pets.push(pet);
+};

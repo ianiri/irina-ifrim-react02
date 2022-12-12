@@ -12,7 +12,7 @@ export const addMessage = (messageElement) => {
     if (messageElement !== undefined) {
       clearMessages();
     }
-  }, 2000);
+  },5000);
 };
 
 export const clearMessages = () => {
