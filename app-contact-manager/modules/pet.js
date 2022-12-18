@@ -12,7 +12,7 @@ export const render = (pet) => {
     </ul>
 
     <button title="Delete" type="button" class="btn btn-secondary mt-2 me-2">Delete</button>
-    <button title="Edit" type="button" class="btn btn-secondary mt-2">Edit</button>
+    <button title="Edit" type="button" class="btn btn-secondary mt-2 edit-pet-button">Edit</button>
   `;
 
   return container;

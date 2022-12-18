@@ -84,3 +84,28 @@ export const createPet = (contactId, pet) => {
   //push mutates
   contact.pets.push(pet);
 };
+
+export const getPet = (contactId, petId) => {
+  const contact = getContact(contactId);
+
+  return contact.pets.find((pet) => {
+    return pet.id === petId;
+  });
+};
+
+//edit pet submit
+export const updatePet = (contactId, petId, {name, species, age}) => {
+  //asta face destructurarea:
+  // const name = contact.name;
+
+  const contact = getContact(contactId);
+  const pet = getPet(contactId, petId);
+
+  if (!pet) {
+    return;
+  }
+
+  pet.name = name;
+  pet.species = surname;
+  pet.age = phone;
+};

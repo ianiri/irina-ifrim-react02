@@ -1,9 +1,10 @@
 import { addMessage, clearMessages } from './notificationBar.js';
-import { createContact, createPet, deleteContact, getContact, updateContact } from "./query.js";
+import { createContact, createPet, deleteContact, getContact, updateContact, updatePet} from "./query.js";
 import createMessage from './message.js';
 import { render as renderEditContact} from "./editContact.js";
 import { clearContent } from './utils.js';
 import { render as renderPetForm} from "./addPetForm.js";
+import { render as renderEditPet } from './editPet.js';
 
 
 const stage = document.querySelector('.stage');
@@ -143,10 +144,58 @@ stage.addEventListener('submit', (event) => {
     age: age.value,
     id: Number(Date.now().toString().slice(-6)),
   });
+  const contact = getContact(contactId.value);
 
   clearContent(stage);
 
-  addMessage(createMessage(`Pet ${name.value} created for contact ${contactId.value}.`));
+  addMessage(createMessage(`Pet ${name.value} created for contact ${contact.name} ${contact.surname} (id: ${contactId.value}).`));
+});
+
+// edit pet button
+stage.addEventListener('click', (event) => {
+  const { target } = event;
+  const button = target;
+
+  if (target.nodeName !== 'BUTTON' || !target.classList.contains('edit-pet-button')) {
+    return;
+  }
+
+  const contactContainer = button.closest('.contact');
+  const contactId = Number(contactContainer.dataset.contactId);
+  const petContainer = button.closest('.pet');
+  const petId = Number(petContainer.dataset.petId);
+  
+  clearContent(stage);
+
+  stage.append(renderEditPet(contactId, petId));
+});
+
+//edit pet submit
+stage.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const { target } = event;
+
+  if (target.nodeName !== 'FORM' || !target.classList.contains('edit-pet')) {
+    return;
+  };
+
+  const form = target;
+  // DOM elements (need .value)
+  const { name, species, age, contactId, id } = form;
+  const { name: contactName, surname: contactSurname } = getContact(
+    contactId.value,
+  );
+  const petId = id.value;
+
+  updatePet(contactId.value, petId, {
+    name: name.value,
+    species: species.value,
+    age: age.value,
+  });
+
+  clearContent(stage);
+  clearMessages();
+  addMessage(createMessage( `Pet ${name.value} (id: ${petId}) updated for contact ${contactName} ${contactSurname} (id: ${contactId.value}).`));
 });
 
 export default stage;
