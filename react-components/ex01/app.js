@@ -79,7 +79,7 @@ const arr5 = person.skills.map((skill) => {
 console.log(arr5);
 
 
-//ex07
+//ex06
 console.warn(`Folosind metoda map pe arrayul skills, returneaza un array care contine cuvintele inversate (exemplu: lmth)`);
 
 const arr6 = person.skills.map((skill) => {
@@ -87,3 +87,83 @@ const arr6 = person.skills.map((skill) => {
 });
 
 console.log(arr6);
+
+
+
+//Tema 12 decembrie
+//ex03
+console.warn(`Folosind map pe arrayul friends, returneaza un array in care fiecare pozitie contine propozitia “Diferenta de varsta dintre {friendName} si {personName} este {diff}” `);
+
+const arr3 = person.friends.map((friend) => {
+  const {name, surname, age} = friend;
+  const diff = person.age - age;
+  const pluralize = diff > 1 && diff !== 0 ? 'ani' : 'an';
+
+  return `Diferenta de varsta dintre ${name} si ${person.name} este ${diff} ${pluralize}.`;
+
+});
+console.log(arr3);
+
+
+//ex04
+console.warn(`Returneaza si afiseaza un array in care fiecare pozitie contine diferenta dintre varsta persoanei si lungimea cuvantului de pe arrayul skill `);
+
+const arr4 = person.skills.map((skill) => {
+  const diff = person.age - skill.length;
+
+  return `${diff}`;
+
+});
+console.log(arr4);
+
+
+//ex07
+console.warn(`Folosind metoda map pe arrayul friends, returneaza un array care sa contina propozitiile
+“{friendName} are {age} ani.”`);
+
+const arr7 = person.friends.map((friend) => {
+  const {name, surname, age} = friend;
+
+  return `${name} are ${age} ani.`;
+
+});
+console.log(arr7);
+
+
+//ex08
+console.warn(`Folosind metoda map pe arrayul friends, returneaza un array care sa contina propozitiile
+“{friendName} are {age} ani.”`);
+
+const arr8 = person.friends.map((friend) => {
+  const {name, surname, age} = friend;
+
+  return `${surname} ${name}`;
+});
+console.log(arr8);
+
+
+//ex09
+console.warn(`Folosind metoda map pe arrayul friends, returneaza un array care contine pe fiecare pozitie diferenta dintre lungimea totala al numelui complet (fara spatii) si varsta prietenului de pe iteratie`);
+
+const arr9 = person.friends.map((friend) => {
+  const {name, surname, age} = friend;
+  const personName = person.name + person.surname;
+  const diff = age - personName.length;
+
+  return `${diff}`;
+});
+console.log(arr9);
+
+
+//ex10
+console.warn(`Folosind metoda map pe arrayul skills returneaza un array care contine diferenta dintre lungimea fiecarui skill si varsta prietenului`);
+
+const arr10 = person.skills.map((skill) => {
+  return person.friends.map((friend) => {
+    const {name, surname, age} = friend;
+    const diff = age - skill.length;
+
+    return `${diff}`;
+  })
+});
+console.log(arr10);
