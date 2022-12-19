@@ -88,6 +88,10 @@ export const createPet = (contactId, pet) => {
 export const getPet = (contactId, petId) => {
   const contact = getContact(contactId);
 
+  if (!contact) {
+    return;
+  }
+
   return contact.pets.find((pet) => {
     return pet.id === petId;
   });
@@ -96,9 +100,8 @@ export const getPet = (contactId, petId) => {
 //edit pet submit
 export const updatePet = (contactId, petId, {name, species, age}) => {
   //asta face destructurarea:
-  // const name = contact.name;
+  // const name = pet.name;
 
-  const contact = getContact(contactId);
   const pet = getPet(contactId, petId);
 
   if (!pet) {
