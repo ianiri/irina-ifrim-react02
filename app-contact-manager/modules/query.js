@@ -109,6 +109,6 @@ export const updatePet = (contactId, petId, {name, species, age}) => {
   }
 
   pet.name = name;
-  pet.species = surname;
-  pet.age = phone;
+  pet.species = species;
+  pet.age = age;
 };
