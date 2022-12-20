@@ -93,7 +93,7 @@ export const getPet = (contactId, petId) => {
   }
 
   return contact.pets.find((pet) => {
-    return pet.id === petId;
+    return pet.id === Number(petId);
   });
 };
 
