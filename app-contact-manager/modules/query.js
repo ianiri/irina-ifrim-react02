@@ -112,3 +112,21 @@ export const updatePet = (contactId, petId, {name, species, age}) => {
   pet.species = species;
   pet.age = age;
 };
+
+//delete pet 
+export const deletePet = (contactId, petId) => {
+  const { pets } = getContact(contactId);
+  let petIndex = -1;
+
+  for (let i = 0; i < pets.length; i++) {
+    const pet = pets[i];
+
+    if (pet.id === petId) {
+      petIndex = i;
+    }
+  }
+
+  if (petIndex >= 0) {
+    pets.splice(petIndex, 1);
+  }
+};

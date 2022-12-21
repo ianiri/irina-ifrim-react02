@@ -1,5 +1,5 @@
 import { addMessage, clearMessages } from './notificationBar.js';
-import { createContact, createPet, deleteContact, getContact, updateContact, updatePet} from "./query.js";
+import { createContact, createPet, deleteContact, deletePet, getContact, updateContact, updatePet} from "./query.js";
 import createMessage from './message.js';
 import { render as renderEditContact} from "./editContact.js";
 import { clearContent } from './utils.js';
@@ -196,6 +196,26 @@ stage.addEventListener('submit', (event) => {
   clearContent(stage);
   clearMessages();
   addMessage(createMessage( `Pet ${name.value} (id: ${petId}) updated for contact ${contactName} ${contactSurname} (id: ${contactId.value}).`));
+});
+
+//delete pet
+stage.addEventListener('click', (event) => {
+  const { target } = event;
+
+  if (target.nodeName !== 'BUTTON' || !target.classList.contains('delete-pet-button')) {
+    return;
+  };
+
+  const button = target;
+  const contactContainer = button.closest('.contact');
+  const contactId = Number(contactContainer.dataset.contactId);
+  const petContainer = button.closest('.pet');
+  const petId = Number(petContainer.dataset.petId);
+
+  deletePet(contactId, petId);
+  clearContent(stage);
+  clearMessages();
+  addMessage(createMessage( `Pet was deleted`));
 });
 
 export default stage;
