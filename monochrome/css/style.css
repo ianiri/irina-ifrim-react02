@@ -445,6 +445,17 @@ a {
   right: 155px;
 }
 
+.header-counters li {
+  padding-right: 0;
+}
+
+.header-counters .qty {
+  display: inline-block;
+  width: 20px;
+  margin-right: 5px;
+  text-align: end;
+}
+
 /* Simt ca am gresit aici ^ ar fi trebuit
 oare pusa iconita direct in placeholder? */
 .header-bottom {
@@ -534,14 +545,30 @@ imaginea. Imi strica alinierea si nu am reusit sa o remediez, asa ca am apelat
   display: flex;
 }
 
-.product-tile-controls a {
+.product-control {
   color: #2b2b2b;
   font-size: 25px;
   display: inline-block;
   margin-left: 16px;
+  padding: 0;
+  border: none;
 }
 
-.product-tile-controls a i:hover {
+.product-control.busy .fa-plus-square,
+.product-control.busy .fa-check-square,
+.product-control.busy .fa-heart {
+  display: none;
+}
+
+.product-control .fa-check-square {
+  color: #740878;
+}
+
+.product-control .fa-heart.added {
+  color: #740878;
+}
+
+.product-control i:hover {
   color: #740878;
 }
 
@@ -623,10 +650,20 @@ aside img {
   display: inline-block;
 }
 
+.footer-sign-up-newsletter .sign-up-confirmation {
+  height: 107px;
+}
+
+.footer-sign-up-newsletter .sign-up-confirmation span{
+  text-decoration: underline;
+}
+
+
 .footer-sign-up-newsletter form {
   display: flex;
   flex-direction: column;
 }
+
 .footer-sign-up-newsletter form label {
   margin-bottom: 10px;
 }
@@ -635,16 +672,27 @@ aside img {
   margin: 2.5px 0;
   border-color: white;
 }
+
+.footer-sign-up-newsletter .form-message {
+  font-size: 15px;
+  color:firebrick;
+}
+
 .footer-sign-up-newsletter button {
-  margin: 10px 5px;
+  max-width: 100px;
+  margin: 10px 5px 10px 0;
   padding: 5px 0;
   font-family: 'Roboto';
   font-weight: normal;
 }
 
-.footer-sign-up-newsletter button {
-  max-width: 100px;
-  margin-left: 0;
+button.busy {
+  border: none;
+  background-color: transparent;
+}
+
+.busy .icon {
+  animation: spin 1s linear infinite;
 }
 
 .footer-nav-style nav li {
@@ -663,3 +711,13 @@ aside img {
 }
 /* footer-ul nu e aliniat ca in design.
 Il voi schimba daca trebuie, dar m-am distrat putin aranjanu-le */
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
