@@ -21,7 +21,7 @@ class NewsletterForm extends React.Component {
 
   onSubmit = (event) => {
     event.preventDefault();
-    
+
     const email = this.state.email;
 
     this.setState({
@@ -58,7 +58,7 @@ class NewsletterForm extends React.Component {
     });
   };
 
-  render () {
+  render() {
     if (this.state.submitted) {
       return (
         <div className="sign-up-confirmation">
@@ -66,53 +66,46 @@ class NewsletterForm extends React.Component {
         </div>
       );
     }
- 
+
     return (
-      <form
-      action=""
-      method="post"
-      onSubmit={this.onSubmit}
-      >
-      <label htmlFor="email-newsletter">sign up for our newsletter</label>
-      <input
-        type="email"
-        name="email"
-        id="email-newsletter"
-        value={this.state.email}
-        onChange={this.onInputChange}
-      ></input>
-      <div className="form-message">{this.state.formMessage}</div>
-      <button 
-        type="submit"
-        className={`${this.state.busy === true ? 'busy' : ''}`}
-      >
-        {this.state.busy ? (
-          <i className="fas fa-spinner icon"></i>
-          ) : (
-          'SUMBIT'
-        )}
-      </button>
-    </form>
+      <form action="" method="post" onSubmit={this.onSubmit}>
+        <label htmlFor="email-newsletter">sign up for our newsletter</label>
+        <input
+          type="email"
+          name="email"
+          id="email-newsletter"
+          value={this.state.email}
+          onChange={this.onInputChange}
+        ></input>
+        <div className="form-message">{this.state.formMessage}</div>
+        <button
+          type="submit"
+          className={`${this.state.busy === true ? 'busy' : ''}`}
+        >
+          {this.state.busy ? <i className="fas fa-spinner icon"></i> : 'SUMBIT'}
+        </button>
+      </form>
     );
   }
 }
 
-const newsletterContainer = document.querySelector('.footer-sign-up-newsletter');
+const newsletterContainer = document.querySelector(
+  '.footer-sign-up-newsletter',
+);
 ReactDOM.createRoot(newsletterContainer).render(
   <NewsletterForm></NewsletterForm>,
 );
 
-
 class AddToCartButton extends React.Component {
   state = {
-      busy: false,
-      inCart: false,
+    busy: false,
+    inCart: false,
   };
 
   onClick = () => {
     this.setState({
       busy: true,
-  });
+    });
 
     setTimeout(() => {
       dispatchEvent(
@@ -145,16 +138,16 @@ class AddToCartButton extends React.Component {
         className={`product-control ${productLoading === true ? 'busy' : ''}`}
         disabled={productLoading}
       >
-        {productInCart
-          ? <i className="far fa-check-square"></i>
-          : <i className="far fa-plus-square"></i>
-        }
+        {productInCart ? (
+          <i className="far fa-check-square"></i>
+        ) : (
+          <i className="far fa-plus-square"></i>
+        )}
         {productLoading ? <i className="fas fa-spinner icon"></i> : <></>}
       </button>
     );
   }
 }
-
 
 class AddToWishlistButton extends React.Component {
   state = {
@@ -198,22 +191,24 @@ class AddToWishlistButton extends React.Component {
         className={`product-control ${productLoading === true ? 'busy' : ''}`}
         disabled={productLoading}
       >
-        {productInWl
-          ? <i className="fa fa-heart added"></i>
-          : <i className="far fa-heart"></i>
-        }
+        {productInWl ? (
+          <i className="fa fa-heart added"></i>
+        ) : (
+          <i className="far fa-heart"></i>
+        )}
         {productLoading ? <i className="fas fa-spinner icon"></i> : <></>}
       </button>
     );
   }
 }
 
-
 class ProductTileControls extends React.Component {
   render() {
     return (
       <>
-        <AddToWishlistButton productId={this.props.productId}></AddToWishlistButton>
+        <AddToWishlistButton
+          productId={this.props.productId}
+        ></AddToWishlistButton>
         <AddToCartButton productId={this.props.productId}></AddToCartButton>
       </>
     );
@@ -225,7 +220,6 @@ productTileControls.forEach((productTileControl, index) => {
     <ProductTileControls productId={index}></ProductTileControls>,
   );
 });
-
 
 class CartCounter extends React.Component {
   state = {
@@ -262,26 +256,30 @@ class CartCounter extends React.Component {
     addEventListener(REMOVE_FROM_CART_EVENT, this.productCartAction);
   }
 
+  componentWillUnmount() {
+    removeEventListener(ADD_TO_CART_EVENT, this.productCartAction);
+    removeEventListener(REMOVE_FROM_CART_EVENT, this.productCartAction);
+  }
+
   render() {
     return (
       <li
         className="header-counter"
         onClick={() => {
+          if (this.state.cartItems.length === 0) {
+            return;
+          }
           alert(this.state.cartItems);
         }}
       >
         <span className="qty">
-          {this.state.cartItemsCount > 0 ?
-          this.state.cartItemsCount
-           : '0'
-          }
+          {this.state.cartItemsCount > 0 ? this.state.cartItemsCount : '0'}
         </span>
         <i className="fas fa-shopping-bag icon"></i>
       </li>
     );
   }
 }
-
 
 class WishlistCounter extends React.Component {
   state = {
@@ -318,26 +316,30 @@ class WishlistCounter extends React.Component {
     addEventListener(REMOVE_FROM_WL_EVENT, this.wishlistAction);
   }
 
+  componentWillUnmount() {
+    removeEventListener(ADD_TO_WL_EVENT, this.wishlistAction);
+    removeEventListener(REMOVE_FROM_WL_EVENT, this.wishlistAction);
+  }
+
   render() {
     return (
       <li
-      className="header-counter"
-      onClick={() => {
-        alert(this.state.items);
-      }}
+        className="header-counter"
+        onClick={() => {
+          if (this.state.items.length === 0) {
+            return;
+          }
+          alert(this.state.items);
+        }}
       >
         <span className="qty">
-          {this.state.itemCount > 0 ?
-          this.state.itemCount
-           : '0'
-          }
+          {this.state.itemCount > 0 ? this.state.itemCount : '0'}
         </span>
         <i className="fas fa-heart icon"></i>
       </li>
     );
   }
 }
-
 
 class HeaderCounters extends React.Component {
   render() {
